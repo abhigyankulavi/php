@@ -4,10 +4,8 @@
     <title>Student Information</title>
 </head>
 <body>
-    <h1>Student Information</h1>
-
-    <!-- HTML form to input student details -->
-    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <h2>Student Information</h2>
+    <form method="post" action="process.php">
         <table>
             <tr>
                 <th>Name</th>
@@ -16,48 +14,18 @@
                 <th>Batch</th>
             </tr>
             <?php
-            // Initialize an empty array to store student data
-            $students = array();
-
-            // Check if the form is submitted
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                for ($i = 1; $i <= 10; $i++) {
-                    // Get input values for each student
-                    $name = $_POST["name$i"];
-                    $roll = $_POST["roll$i"];
-                    $stream = $_POST["stream$i"];
-                    $batch = $_POST["batch$i"];
-
-                    // Add student data to the array
-                    $students[] = array("name" => $name, "roll" => $roll, "stream" => $stream, "batch" => $batch);
-                }
-            }
-
-            // Display student data in a table
-            foreach ($students as $student) {
+            for ($i = 1; $i <= 10; $i++) {
                 echo "<tr>";
-                echo "<td>" . $student["name"] . "</td>";
-                echo "<td>" . $student["roll"] . "</td>";
-                echo "<td>" . $student["stream"] . "</td>";
-                echo "<td>" . $student["batch"] . "</td>";
+                echo "<td><input type='text' name='name[]'></td>";
+                echo "<td><input type='text' name='roll[]'></td>";
+                echo "<td><input type='text' name='stream[]'></td>";
+                echo "<td><input type='text' name='batch[]'></td>";
                 echo "</tr>";
             }
             ?>
         </table>
-
-        <!-- Input fields for 10 students -->
-        <?php for ($i = 1; $i <= 10; $i++) : ?>
-            <label for="name<?php echo $i; ?>">Name:</label>
-            <input type="text" name="name<?php echo $i; ?>" required><br>
-            <label for="roll<?php echo $i; ?>">Roll:</label>
-            <input type="text" name="roll<?php echo $i; ?>" required><br>
-            <label for="stream<?php echo $i; ?>">Stream:</label>
-            <input type="text" name="stream<?php echo $i; ?>" required><br>
-            <label for="batch<?php echo $i; ?>">Batch:</label>
-            <input type="text" name="batch<?php echo $i; ?>" required><br><br>
-        <?php endfor; ?>
-
         <input type="submit" value="Submit">
     </form>
 </body>
 </html>
+
