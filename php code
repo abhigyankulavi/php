@@ -4,8 +4,38 @@
     <title>Student Information</title>
 </head>
 <body>
-    <h2>Student Information</h2>
-    <form method="post" action="process.php">
+    <h1>Student Information</h1>
+
+    <?php
+    // Define an array to store student information
+    $students = [];
+
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Loop through each student
+        for ($i = 1; $i <= 10; $i++) {
+            // Collect student data from the form
+            $name = $_POST["name$i"];
+            $roll = $_POST["roll$i"];
+            $stream = $_POST["stream$i"];
+            $batch = $_POST["batch$i"];
+
+            // Create an array to represent a student
+            $studentData = [
+                'Name' => $name,
+                'Roll' => $roll,
+                'Stream' => $stream,
+                'Batch' => $batch
+            ];
+
+            // Add the student to the array of students
+            $students[] = $studentData;
+        }
+    }
+    ?>
+
+    <!-- Display the input form -->
+    <form method="post">
         <table>
             <tr>
                 <th>Name</th>
@@ -14,18 +44,41 @@
                 <th>Batch</th>
             </tr>
             <?php
+            // Generate input fields for 10 students
             for ($i = 1; $i <= 10; $i++) {
-                echo "<tr>";
-                echo "<td><input type='text' name='name[]'></td>";
-                echo "<td><input type='text' name='roll[]'></td>";
-                echo "<td><input type='text' name='stream[]'></td>";
-                echo "<td><input type='text' name='batch[]'></td>";
-                echo "</tr>";
+                echo "<tr>
+                        <td><input type='text' name='name$i' required></td>
+                        <td><input type='text' name='roll$i' required></td>
+                        <td><input type='text' name='stream$i' required></td>
+                        <td><input type='text' name='batch$i' required></td>
+                    </tr>";
             }
             ?>
         </table>
+        <br>
         <input type="submit" value="Submit">
     </form>
+
+    <!-- Display the student information in a table -->
+    <?php
+    if (!empty($students)) {
+        echo "<h2>Student List</h2>";
+        echo "<table border='1'>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll</th>
+                    <th>Stream</th>
+                    <th>Batch</th>
+                </tr>";
+        foreach ($students as $student) {
+            echo "<tr>";
+            foreach ($student as $value) {
+                echo "<td>$value</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+    ?>
 </body>
 </html>
-
